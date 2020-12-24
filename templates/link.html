@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+  {% block script %}
+    <script src="{{url_for('static', filename='link.js')}} "></script>
+    {% endblock %}
+    {% block style %}
+      <link rel="stylesheet" href="{{url_for('static', filename='link.css')}}">
+    {% endblock %}
+    {% block content %}
+      <div id = "container">
+          <h1 id="styler">Merry Christmas</h1>
+          <input type="text" name="name" maxlength="50" required id="name" autocomplete="no" value="Full Name"/>
+          <input type="file" name="image" id="image">
+          <p style="color: white; font-size: 11px; text-align: left; padding-left:10px;">Message:</p>
+          <div id="message" contenteditable></div>
+          <button type="submit" id="btn"><!--•••-->Create</button>\
+          <div id="pop">
+            <p id="url" ></p>
+            <a id="view" href="">Wish.</a>
+           </div>
+          <div id="usage">
+            <h3 style="margin: 0px 0px 5px 5px;">Welcome to Greet</h3>
+            <span style="font-size: 13px;">A simple platform to greet your loved ones happy celebration with an image of your self included.</span>
+            <ul>
+              <li>Input your name in the above field</li>
+              <li>Select a picture of your choice "optional".</li>
+              <li>Click the generate button to generate your url</li>
+            </ul>
+              <span style="font-size: 12px;"> The picture is displayed to the person who views the url along with your greetings and name.</span>
+          </div>
+      </div>
+    {% endblock %}
