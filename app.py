@@ -1,6 +1,7 @@
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, render_template, request, jsonify, send_from_directory
 from json import loads
 from flask_sqlalchemy import SQLAlchemy
+import os
 
 app = Flask('__name__')
 app.secret_key = 'celeb_by_qeens'
@@ -10,6 +11,7 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 urls = {
     'home': '/',
     'wish': '/<string:lnk>',
+    'favicon': '/favicon.ico'
 }
 
 db: SQLAlchemy = SQLAlchemy(app)
@@ -48,9 +50,15 @@ def home():
     return render_template('link.html', home=True)
 
 
+@app.route(urls['favicon'])
+def favicon():
+    return send_from_directory(os.path.join(app.root_path, 'static'), 'favicon.ico',
+                               mimetype='image/vnd.microsoft.icon')
+
+
 @app.route(urls['wish'])
 def wish(lnk: str):
-    pass
+    [id_, name] = lnk.split('-')
 
 
 if __name__ == '__main__':

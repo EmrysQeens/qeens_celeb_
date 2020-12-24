@@ -1,4 +1,8 @@
-window.onload = () => alert('Welcome \n Wish your families and friends with a nice page and a picture of your choice and a heart warming message... When generated a url shows below the create button you can view by clicking thw wish link.')
+window.onload = () =>{
+     alert('Welcome \n Wish your families and friends with a nice page and a picture of your choice and a heart warming message... When generated a url shows below the create button you can view by clicking thw wish link.')
+     const aud = document.querySelector('audio')
+     document.onclick = () => aud.play()
+}
 
 document.addEventListener('DOMContentLoaded', e=>{
   const name = document.querySelector('#name')
@@ -70,7 +74,7 @@ document.addEventListener('DOMContentLoaded', e=>{
                 const pop = document.querySelector('#pop')
                 const p = pop.querySelector('#url')
                 const view = pop.querySelector('#view')
-                p.innerText = 'URL   : ' + document.location['href'] + ret_val['lnk']
+                p.innerText = 'URL   : ' + document.location['href'] + '-' + ret_val['lnk']
                 view.href = document.location['href'] + ret_val['lnk']
                 pop.style.display = 'block'
                 alert('Click the View link to view your greetings')
