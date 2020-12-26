@@ -15,5 +15,5 @@ document.addEventListener('DOMContentLoaded', e=>{
     let writer = setInterval(()=>{
         p.innerText = wisher.substr(0,counter++)
         if ( p.innerText === wisher) clearInterval(writer)
-    }, 30);
+    }, .05);
 })
