@@ -8,18 +8,18 @@
     {% block content %}
       <div id = "container">
           <h1 id="styler">Merry Christmas</h1>
-          <input type="text" name="name" maxlength="50" required id="name" autocomplete="no" value="Full Name"/>
-          <input type="file" name="image" id="image">
+          <input type="text" class="it" name="name" maxlength="50" required id="name" autocomplete="no" value="Full Name"/>
+          <input type="file" class="it" name="image" id="image" accept="image/*">
           <p style="color: white; font-size: 11px; text-align: left; padding-left:10px;">Message:</p>
           <div id="message" contenteditable></div>
-          <button type="submit" id="btn"><!--•••-->Create</button>\
+          <button type="submit" id="btn"><!--•••-->Create</button>
           <div id="pop">
-            <p id="url" ></p>
+            <input id="url" readonly ></input>
             <a id="view" href="">Wish.</a>
            </div>
           <div id="usage">
-            <h3 style="margin: 0px 0px 5px 5px;">Welcome to Greet</h3>
-            <span style="font-size: 13px;">A simple platform to greet your loved ones happy celebration with an image of your self included.</span>
+            <h3 style="margin: 0px 0px 5px 5px;">Welcome to Wish</h3>
+            <span style="font-size: 13px;">A simple platform to greet your loved ones happy celebration with an image of your self included and a message to extend your wishes..</span>
             <ul>
               <li>Input your name in the above field</li>
               <li>Select a picture of your choice "optional".</li>

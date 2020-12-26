@@ -1,11 +1,11 @@
-from flask import Flask, render_template, request, jsonify, send_from_directory
+from flask import Flask, render_template, request, jsonify, send_from_directory, redirect
 from json import loads
 from flask_sqlalchemy import SQLAlchemy
 import os
 
 app = Flask('__name__')
 app.secret_key = 'celeb_by_qeens'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///db.sqlite3'
+app.config['SQLALCHEMY_DATABASE_URI'] =  'postgres://jtdrukkmcjtktf:02991bc640eade3baab406b31c5b6cd61bb0c6739a8bc37fb84d5afbdff238f3@ec2-54-84-98-18.compute-1.amazonaws.com:5432/dek9mol2100l7c'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 urls = {
@@ -30,12 +30,12 @@ class User(db.Model):   # User model to save name and image
         self.msg = msg
 
     def __repr__(self):
-        return {
+        return str({
             'id': self.id,
             'name': self.name,
             'b64_img': self.b64_img,
             'msg': self.msg
-        }
+        })
 
 
 # home page handler
@@ -46,7 +46,7 @@ def home():
         user: User = User(data['name'].lower(), data['image'], data['msg'])
         db.session.add(user)
         db.session.commit()
-        return jsonify({'ret_val': True, 'lnk': str(user.id) + user.name})
+        return jsonify({'ret_val': True, 'lnk': user.name + '-' + str(user.id) })
     return render_template('link.html', home=True)
 
 
@@ -58,7 +58,11 @@ def favicon():
 
 @app.route(urls['wish'])
 def wish(lnk: str):
-    [id_, name] = lnk.split('-')
+    [name, id_] = lnk.split('-')
+    user: User = User.query.filter_by(name=name.lower(), id=int(id_)).first()
+    if user is not None:
+        return render_template('wish.html', user=user)
+    return redirect('/', 200)
 
 
 if __name__ == '__main__':

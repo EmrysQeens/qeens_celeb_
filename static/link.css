@@ -10,14 +10,7 @@
   }
 }
 
-
-@fontface{
-  src: url('/static/b612.ttf');
-  font-family: B612;
-}
-
-
-@fontface{
+@font-face{
   src: url('/static/comic.ttf');
   font-family: 'Comic Sans Ms';
 }
@@ -66,7 +59,7 @@ body {
   left: 50%;
   margin-top: -50px;
   margin-left: -150px;
-  position: fixed;
+  position: absolute;
 }
 
 li {
@@ -78,7 +71,7 @@ li {
   color: aqua;
 }
 
-input {
+.it {
   width: 95%;
   border: 0px;
   border-bottom: 3px solid;
@@ -124,4 +117,15 @@ input {
 h2{
   padding-top: 30px;
   color: aqua;
+}
+
+#url {
+    background: white;
+    display: block;
+    width: 100%;
+    border-radius: 10px;
+    border: none;
+    outline: none;
+    padding: 5px;
+    font-size: 12px;
 }

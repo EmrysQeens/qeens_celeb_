@@ -1,5 +1,5 @@
 window.onload = () =>{
-     alert('Welcome \n Wish your families and friends with a nice page and a picture of your choice and a heart warming message... When generated a url shows below the create button you can view by clicking thw wish link.')
+     alert('Welcome \n Wish your families and friends with a nice page and a picture of your choice and a heart warming message... When generated a url shows below the create button you can view by clicking the wish link or copy the link in the box.')
      const aud = document.querySelector('audio')
      document.onclick = () => aud.play()
 }
@@ -10,6 +10,8 @@ document.addEventListener('DOMContentLoaded', e=>{
   const message = document.querySelector('#message')
   const btn = document.querySelector('#btn')
   let interval = undefined
+
+  const test_name = /^[a-z A-Z][^0-9][^~`!@#$%^&*(){}\[\];:\"\'<,.>?\/\\|_+=-]* [a-z A-Z][^0-9][^~`!@#$%^&*(){}\[\];:\"\'<,.>?\/\\|_+=-]*$/
 
   name.onfocus = e => e.target.value = ( e.target.value == "Full Name" ) ? "" : e.target.value  // placeholder
   name.oninput = () => btn.disabled = false
@@ -41,8 +43,12 @@ document.addEventListener('DOMContentLoaded', e=>{
 
   const generate = async (f) => {
     const nm = name.value
-    if ( nm === ''){
+    if ( nm === '' || nm === 'Full Name'){
         alert('Input valid name please..')
+        return
+    }
+    if ( ! test_name.test(nm) ){
+        alert('Provide fullname seperated by a space:  Sample\n Awogbami Victor')
         return
     }
     if (image.files.length === 0){
@@ -74,10 +80,10 @@ document.addEventListener('DOMContentLoaded', e=>{
                 const pop = document.querySelector('#pop')
                 const p = pop.querySelector('#url')
                 const view = pop.querySelector('#view')
-                p.innerText = 'URL   : ' + document.location['href'] + '-' + ret_val['lnk']
+                p.value = document.location['href'] + ret_val['lnk']
                 view.href = document.location['href'] + ret_val['lnk']
                 pop.style.display = 'block'
-                alert('Click the View link to view your greetings')
+                alert('The link in the box below the create button is your wish url.\nClick the View link to view your greetings')
             }
         }
         load(f, false)

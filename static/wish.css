@@ -1,0 +1,67 @@
+@media only screen and (max-width:480px){
+  body{
+    background: url('/static/assets/tree.gif') no-repeat center center fixed;
+  }
+}
+
+@media only screen and (min-width:480px){
+  body{
+    background: url('/static/assets/bcks/bck3.jpg') no-repeat center center fixed;
+  }
+}
+
+@font-face{
+  src: url('/static/comic.ttf');
+  font-family: 'Comic Sans Ms';
+}
+
+body *{
+  font-family: 'Comic Sans Ms';
+}
+
+html {
+    /* To make use of full height of page*/
+    min-height: 100%;
+    margin: 0;
+}
+body {
+    min-height: 100%;
+    margin: 0;
+    background-size: cover;
+}
+
+p{
+    font-size: 10px;
+    color: white;
+    margin: 0;
+}
+
+#container {
+  width: 300px;
+  margin: auto;
+  border-radius: 20px 10px;
+  text-align: left;
+  top: 10%;
+  left: 50%;
+  margin-top: -50px;
+  margin-left: -150px;
+  position: absolute;
+  color: white;
+}
+
+#img_ {
+    width: 300px;
+    height: 60%;
+    border: none;
+    border-radius: 10px;
+    margin-top: 10px;
+}
+
+#nm {
+    color: white;
+}
+
+#w {
+    margin: 5px;
+    margin-left: 0px;
+}
