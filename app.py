@@ -12,7 +12,7 @@ urls = {
     'home': '/',
     'wish': '/<string:lnk>',
     'favicon': '/favicon.ico',
-    'users' : '/users'
+    'users': '/users'
 }
 
 db: SQLAlchemy = SQLAlchemy(app)
@@ -38,35 +38,25 @@ class User(db.Model):   # User model to save name and image
             'msg': self.msg
         })
 
-def r(ns: list)-> str:
-	ret = ''
-	for h in ns:
-		ret += h + '-'
-	return ret[:-1]
-
-def b(ns: list)->str:
-	ret = ''
-	for h in ns[:-1]:
-		ret +=  h+" "
-	return ret[:-1]
-
 
 # home page handler
 @app.route(urls['home'], methods=['POST', 'GET'])
 def home():
     if request.method == 'POST':
         data = loads(request.form['data'])
-        user: User = User(data['name'].lower(), data['image'], data['msg'])
+        name = data['name'].lower()
+        user: User = User(name, data['image'], data['msg'])
         db.session.add(user)
         db.session.commit()
-        names = user.name.split(' ')
-        return  jsonify({'ret_val': True, 'lnk': r(names) + '-' + str(user.id) })
+        return jsonify({'ret_val': True, 'lnk': name.replace(' ', '-') + '-' + str(user.id) })
     return render_template('link.html', title='Qeens Wish')
+
 
 @app.route(urls['users'])
 def users_():
-	usrs= User.query.all()
-	return str([x.name for x in usrs])
+    users = [{'name': x.name.title(), 'url': x.name.replace(' ', '-') + '-' + str(x.id)} for x in User.query.all()]
+    return render_template('users.html', title='Users', users=users, len=len(users))
+
 
 @app.route(urls['favicon'])
 def favicon():
@@ -74,10 +64,16 @@ def favicon():
                                mimetype='image/vnd.microsoft.icon')
 
 
+def b(ns: list) -> str:
+    ret = ''
+    for h in ns[:-1]:
+        ret += h+" "
+    return ret[:-1]
+
+
 @app.route(urls['wish'])
 def wish(lnk: str):
     details = lnk.split('-')
-    print(b(details)+'r')
     user: User = User.query.filter_by(name=b(details).lower(), id=int(details[-1])).first()
     if user is not None:
         return render_template('wish.html', user=user, title=user.name+' Wishes')

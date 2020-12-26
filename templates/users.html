@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+  {% block script %}
+    <!--<script src="{{url_for('static', filename='wish.js')}} "></script>-->
+    {% endblock %}
+    {% block style %}
+      <link rel="stylesheet" href="{{url_for('static', filename='users.css')}}">
+    {% endblock %}
+    {% block content %}
+  <div id="container">
+        {% if len <= 0 %}
+          <p>No Users</p>
+          {% else %}
+            <ol>
+            {% for user in users %}
+              <li><a href="{{user.url}}">{{user.name}}</a></li>
+             {% endfor %}
+              </ol>
+          {% endif %}
+    </div>
+    {% endblock %}
