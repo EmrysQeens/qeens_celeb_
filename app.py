@@ -11,7 +11,8 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 urls = {
     'home': '/',
     'wish': '/<string:lnk>',
-    'favicon': '/favicon.ico'
+    'favicon': '/favicon.ico',
+    'users' : '/users'
 }
 
 db: SQLAlchemy = SQLAlchemy(app)
@@ -37,6 +38,18 @@ class User(db.Model):   # User model to save name and image
             'msg': self.msg
         })
 
+def r(ns: list)-> str:
+	ret = ''
+	for h in ns:
+		ret += h + '-'
+	return ret[:-1]
+
+def b(ns: list)->str:
+	ret = ''
+	for h in ns[:-1]:
+		ret +=  h+" "
+	return ret[:-1]
+
 
 # home page handler
 @app.route(urls['home'], methods=['POST', 'GET'])
@@ -46,11 +59,14 @@ def home():
         user: User = User(data['name'].lower(), data['image'], data['msg'])
         db.session.add(user)
         db.session.commit()
-        [first, second] = user.name.split(' ')
-        return jsonify({'ret_val': True, 'lnk': first+ '-' + second + '-' + str(user.id) })
+        names = user.name.split(' ')
+        return  jsonify({'ret_val': True, 'lnk': r(names) + '-' + str(user.id) })
     return render_template('link.html', title='Qeens Wish')
 
-
+@app.route(urls['users'])
+def users_():
+	usrs= User.query.all()
+	return str([x.name for x in usrs])
 
 @app.route(urls['favicon'])
 def favicon():
@@ -60,8 +76,9 @@ def favicon():
 
 @app.route(urls['wish'])
 def wish(lnk: str):
-    [first, second, id_] = lnk.split('-')
-    user: User = User.query.filter_by(name=(first+' '+second).lower(), id=int(id_)).first()
+    details = lnk.split('-')
+    print(b(details)+'r')
+    user: User = User.query.filter_by(name=b(details).lower(), id=int(details[-1])).first()
     if user is not None:
         return render_template('wish.html', user=user, title=user.name+' Wishes')
     return redirect('/', 200)
