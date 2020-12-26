@@ -5,7 +5,7 @@ import os
 
 app = Flask('__name__')
 app.secret_key = 'celeb_by_qeens'
-app.config['SQLALCHEMY_DATABASE_URI'] =  'postgres://jtdrukkmcjtktf:02991bc640eade3baab406b31c5b6cd61bb0c6739a8bc37fb84d5afbdff238f3@ec2-54-84-98-18.compute-1.amazonaws.com:5432/dek9mol2100l7c'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres://jtdrukkmcjtktf:02991bc640eade3baab406b31c5b6cd61bb0c6739a8bc37fb84d5afbdff238f3@ec2-54-84-98-18.compute-1.amazonaws.com:5432/dek9mol2100l7c'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 urls = {
@@ -46,7 +46,8 @@ def home():
         user: User = User(data['name'].lower(), data['image'], data['msg'])
         db.session.add(user)
         db.session.commit()
-        return jsonify({'ret_val': True, 'lnk': user.name + '-' + str(user.id) })
+        [first, second] = user.name.split(' ')
+        return jsonify({'ret_val': True, 'lnk': first+ '-' + second + '-' + str(user.id) })
     return render_template('link.html', title='Qeens Wish')
 
 
@@ -59,8 +60,8 @@ def favicon():
 
 @app.route(urls['wish'])
 def wish(lnk: str):
-    [name, id_] = lnk.split('-')
-    user: User = User.query.filter_by(name=name.lower(), id=int(id_)).first()
+    [first, second, id_] = lnk.split('-')
+    user: User = User.query.filter_by(name=(first+' '+second).lower(), id=int(id_)).first()
     if user is not None:
         return render_template('wish.html', user=user, title=user.name+' Wishes')
     return redirect('/', 200)
