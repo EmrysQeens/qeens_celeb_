@@ -47,7 +47,8 @@ def home():
         db.session.add(user)
         db.session.commit()
         return jsonify({'ret_val': True, 'lnk': user.name + '-' + str(user.id) })
-    return render_template('link.html', home=True)
+    return render_template('link.html', title='Qeens Wish')
+
 
 
 @app.route(urls['favicon'])
@@ -61,7 +62,7 @@ def wish(lnk: str):
     [name, id_] = lnk.split('-')
     user: User = User.query.filter_by(name=name.lower(), id=int(id_)).first()
     if user is not None:
-        return render_template('wish.html', user=user)
+        return render_template('wish.html', user=user, title=user.name+' Wishes')
     return redirect('/', 200)
 
 
